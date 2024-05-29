@@ -36,3 +36,74 @@ INFO : 2024-05-29 15:23:08 - ressources/html/css/css.css a été demandé par le
 INFO : 2024-05-29 15:23:08 - ressources/html/images/n2.jpg a été demandé par le client /10.11.34.122
 INFO : 2024-05-29 15:23:11 - ressources/html/index.html a été demandé par le client /10.11.34.122
 INFO : 2024-05-29 15:23:11 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:29:25 - Démarrage du serveur
+WARN : 2024-05-29 15:29:26 - Numéro de port non précisé, lecture du fichier de configuration...
+INFO : 2024-05-29 15:29:26 - Démarrage du serveur sur : http://10.11.34.122:8888/
+INFO : 2024-05-29 15:29:27 - ressources/html/miniWeb.html a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:29:27 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:29:27 - ressources/html/images/n2.jpg a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:30:02 - ressources/html/miniWeb.html a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:30:02 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:30:02 - ressources/html/images/n2.jpg a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:30:33 - ressources/html/miniWeb.html a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:30:33 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:30:33 - ressources/html/images/n2.jpg a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:30:34 - ressources/html/miniWeb.html a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:30:34 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:30:34 - ressources/html/images/n2.jpg a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:30:36 - ressources/html/miniWeb.html a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:30:36 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:30:36 - ressources/html/images/n2.jpg a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:31:19 - Démarrage du serveur
+WARN : 2024-05-29 15:31:19 - Numéro de port non précisé, lecture du fichier de configuration...
+INFO : 2024-05-29 15:31:19 - Démarrage du serveur sur : http://10.11.34.122:8888/
+INFO : 2024-05-29 15:32:17 - ressources/html/miniWeb.html a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:32:17 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:32:17 - ressources/html/images/n2.jpg a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:32:21 - ressources/html/index.html a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:32:21 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:32:22 - ressources/html/technique.html a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:32:22 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:32:22 - ressources/html/images/l1.gif a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:32:53 - ressources/html/technique.html a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:32:53 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:32:53 - ressources/html/images/l1.gif a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:33:08 - ressources/html/technique.html a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:33:08 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:33:08 - ressources/html/images/l1.gif a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:33:22 - ressources/html/technique.html a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:33:22 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:33:22 - ressources/html/images/l1.gif a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:33:35 - ressources/html/technique.html a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:33:35 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:33:35 - ressources/html/images/l1.gif a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:33:57 - ressources/html/technique.html a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:33:57 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:33:57 - ressources/html/images/l1.gif a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:34:06 - ressources/html/technique.html a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:34:06 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:34:06 - ressources/html/images/l1.gif a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:34:11 - ressources/html/technique.html a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:34:11 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:34:11 - ressources/html/images/l1.gif a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:34:53 - ressources/html/technique.html a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:34:53 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:34:53 - ressources/html/images/l1.gif a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:35:32 - ressources/html/technique.html a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:35:32 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:35:32 - ressources/html/images/l1.gif a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:35:32 - ressources/html/error/404.html a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:36:28 - ressources/html/technique.html a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:36:28 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:36:28 - ressources/html/images/l1.gif a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:36:28 - ressources/html/error/404.html a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:36:44 - ressources/html/index.html a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:36:44 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:36:44 - ressources/html/error/404.html a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:36:45 - ressources/html/miniWeb.html a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:36:46 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:36:46 - ressources/html/images/n2.jpg a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:36:46 - ressources/html/error/404.html a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:36:50 - ressources/html/index.html a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:36:50 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-05-29 15:36:50 - ressources/html/error/404.html a été demandé par le client /10.11.34.122
