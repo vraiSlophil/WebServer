@@ -1,0 +1,32 @@
+Objectif : écrire un programme qui communique avec un navigateur internet.
+
+Description :
+
+Le programme à écrire est un petit serveur Web car il doit répondre aux requêtes faites par un navigateur web quelconque (Mozilla, Chrome, Safari, Ie,…), le client. Le cours sur les applications contient les informations nécessaires pour interpréter les données reçues depuis un client ainsi que les données qu'il faut lui renvoyer. Les fichiers de captures des trames HTTP_1, HTTP_2_1 et HTTP_2_2 sont des exemples dont on peut également s'inspirer.
+
+Sysnopsis :
+
+java HttpServer [port_number]
+
+si port_number n'est pas donné, alors on prendra le port standard : 80
+
+Conseils pour la réalisation :
+
+Les navigateurs transmettent leurs requêtes sous la forme de plusieurs chaînes de caractères séparées de manière logique par les caractères codés 0D et 0A. Cela revient, en java, à lire des chaînes de caractères depuis le Socket.
+
+Une première étape serait de faire un programme serveur qui ne fait qu'afficher à l'écran ce que lui envoie un client.
+
+De même, le serveur envoie ses réponses sous la forme de chaînes de caractères, mais également sous la forme de fichiers lus depuis le disque, les pages HTML par exemple, mais aussi les images, etc… La manière la plus transparente pour envoyer un fichier d'un type quelconque est tout d'abord de mettre le contenu d'un fichier dans un tableau d'octet (byte[]), puis d'envoyer ce tableau dans le Socket.
+
+La deuxième étape serait de traiter la requête du client pour y trouver quel fichier y est demandé, puis de lui retourner ce fichier, en le faisant précéder des lignes de réponses standards.
+
+ Il sera plus facile de considérer que les fichiers sont recherchés à partir du répertoire courant, où est lancé le serveur.
+
+Pour tester, il faut mettre dans la barre du navigateur : http://server_address[:port_number]/file_name
+
+par exemple : http://localhost:8080/index.html
+
+
+Le répertoire de fichiers Site_web contient une arborescence de fichiers qui peut être utilisée pour tester le serveur.
+
+Travail à rendre : le fichier HttpServer.java

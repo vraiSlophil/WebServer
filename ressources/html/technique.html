@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Techniques utilisées pour le serveur MiniWeb</title>
+    <link rel="stylesheet" type="text/css" href="css/css.css">
+</head>
+
+<body>
+<a href="index.html">Retour</a>
+<img src="images/l1.gif" alt="null">
+<h1>Techniques utilisées pour le serveur MiniWeb</h1>
+
+<h2>API java</h2>
+
+<p>Le serveur MiniWeb est réalisé avec les classes Socket et ServerSocket du package java.net. Les fichiers pouvant être
+    des fichiers texte ou des images binaires, les classes InputStream et OutputStream du package java.io sont utilisées
+    pour lire les fichiers et les envoyer vers le client (le navigateur). Les requêtes des navigateurs peuvent être lues
+    comme des fichiers textes avec la classe BufferedReader.</p>
+
+<h2>Protocole</h2>
+
+<p>Les navigateurs vont envoyer au serveur une requête de la forme :</p>
+
+<p><b>GET /</b><i>nom-fichier.html</i> <b>HTTP/1.1</b></p>
+
+<p>(seul <i>nom-fichier.html</i> peut varier) il faut alors retourner le fichier <i>nom-fichier.html</i> au navigateur
+    (ou retourner le contenu du fichier index.html si aucun nom de fichier n'est donné).</p>
+
+</body>
+
+</html>
