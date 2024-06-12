@@ -107,3 +107,80 @@ INFO : 2024-05-29 15:36:46 - ressources/html/error/404.html a été demandé par
 INFO : 2024-05-29 15:36:50 - ressources/html/index.html a été demandé par le client /10.11.34.122
 INFO : 2024-05-29 15:36:50 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
 INFO : 2024-05-29 15:36:50 - ressources/html/error/404.html a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 10:36:56 - Démarrage du serveur
+WARN : 2024-06-12 10:36:56 - Numéro de port non précisé, lecture du fichier de configuration...
+INFO : 2024-06-12 10:36:56 - Démarrage du serveur sur : http://10.11.34.122:8888/
+INFO : 2024-06-12 10:37:19 - ressources/html/index.html a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 10:37:19 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 10:37:19 - ressources/html/error/404.html a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 10:37:22 - ressources/html/miniWeb.html a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 10:37:22 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 10:37:22 - ressources/html/images/n2.jpg a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 10:37:25 - ressources/html/technique.html a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 10:37:25 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 10:37:25 - ressources/html/images/l1.gif a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 10:37:35 - ressources/html/error/404.html a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 10:37:38 - ressources/html/error/404.html a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 10:37:40 - ressources/html/technique.html a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 10:37:40 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 10:37:40 - ressources/html/images/l1.gif a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 10:37:41 - ressources/html/index.html a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 10:37:41 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 10:37:42 - ressources/html/miniWeb.html a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 10:37:42 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 10:37:42 - ressources/html/images/n2.jpg a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 10:37:43 - ressources/html/index.html a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 10:37:43 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 11:04:56 - Démarrage du serveur
+WARN : 2024-06-12 11:04:56 - Numéro de port non précisé, lecture du fichier de configuration...
+INFO : 2024-06-12 11:04:56 - Démarrage du serveur sur : http://10.11.34.122:8888/
+INFO : 2024-06-12 11:04:59 - ressources/html/index.html a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 11:04:59 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 11:05:00 - ressources/html/miniWeb.html a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 11:05:00 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 11:05:00 - ressources/html/images/n2.jpg a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 11:05:02 - ressources/html/index.html a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 11:05:02 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 11:05:03 - ressources/html/technique.html a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 11:05:03 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 11:05:03 - ressources/html/images/l1.gif a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 11:05:05 - ressources/html/index.html a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 11:05:05 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 11:05:47 - ressources/html/error/404.html a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 11:07:53 - ressources/html/error/404.html a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 11:18:00 - Démarrage du serveur
+WARN : 2024-06-12 11:18:00 - Numéro de port non précisé, lecture du fichier de configuration...
+INFO : 2024-06-12 11:18:00 - Démarrage du serveur sur : http://10.11.34.122:8888/
+INFO : 2024-06-12 11:18:02 - ressources/html/index.html a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 11:18:02 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 11:18:05 - ressources/html/miniWeb.html a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 11:18:05 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 11:18:05 - ressources/html/images/n2.jpg a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 11:25:16 - Démarrage du serveur
+WARN : 2024-06-12 11:25:16 - Numéro de port non précisé, lecture du fichier de configuration...
+INFO : 2024-06-12 11:25:16 - Démarrage du serveur sur : http://10.11.34.122:8888/
+INFO : 2024-06-12 11:25:18 - ressources/html/index.html a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 11:25:19 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 11:25:20 - ressources/html/miniWeb.html a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 11:25:20 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 11:25:20 - ressources/html/images/n2.jpg a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 11:25:21 - ressources/html/index.html a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 11:25:21 - ressources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 11:25:24 - ressources/html/error/404.html a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 11:27:07 - Démarrage du serveur
+WARN : 2024-06-12 11:27:07 - Numéro de port non précisé, lecture du fichier de configuration...
+INFO : 2024-06-12 11:27:07 - Démarrage du serveur sur : http://10.11.34.122:8888/
+WARN : 2024-06-12 13:13:52 - Numéro de port non précisé, lecture du fichier de configuration...
+INFO : 2024-06-12 13:13:52 - Démarrage du serveur sur : http://10.11.34.122:8888/
+INFO : 2024-06-12 13:13:55 - resources/html/index.html a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 13:13:55 - resources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 13:13:57 - resources/html/miniWeb.html a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 13:13:57 - resources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 13:13:57 - resources/html/images/n2.jpg a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 13:13:58 - resources/html/index.html a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 13:13:58 - resources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 13:13:59 - resources/html/technique.html a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 13:13:59 - resources/html/css/css.css a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 13:13:59 - resources/html/images/l1.gif a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 13:14:00 - resources/html/index.html a été demandé par le client /10.11.34.122
+INFO : 2024-06-12 13:14:00 - resources/html/css/css.css a été demandé par le client /10.11.34.122
