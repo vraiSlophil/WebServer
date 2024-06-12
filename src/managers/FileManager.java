@@ -1,5 +1,6 @@
 package managers;
 
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -9,17 +10,20 @@ import java.nio.file.Paths;
  */
 public class FileManager {
 
-    private ConfigManager configManager;
-    private final LogManager logManager;
-
     /**
      * Constructeur de la classe FileManager.
-     * @param configManager Le manager de configuration.
-     * @param logManager Le manager de logs.
      */
-    public FileManager(ConfigManager configManager, LogManager logManager) {
-        this.configManager = configManager;
-        this.logManager = logManager;
+    public FileManager() {
+    }
+
+    /**
+     * Méthode pour vérifier si un fichier existe.
+     * @param filePath Le chemin d'accès au fichier.
+     * @return true si le fichier existe, false sinon.
+     */
+    public boolean fileExists(String filePath) {
+        File file = new File(filePath);
+        return file.exists() && !file.isDirectory();
     }
 
     /**
@@ -29,11 +33,9 @@ public class FileManager {
      * @throws Exception Si une erreur se produit lors de la lecture du fichier.
      */
     public byte[] readFile(String filePath) throws Exception {
-        try {
-            return Files.readAllBytes(Paths.get(filePath));
-        } catch (Exception e) {
-            logManager.print("Erreur lors de la lecture du fichier : " + e.getMessage(), LogManager.SEVERE);
-            throw e;
+        if (!fileExists(filePath)) {
+            throw new Exception("Le fichier " + filePath + " n'existe pas ou est un répertoire.");
         }
+        return Files.readAllBytes(Paths.get(filePath));
     }
 }

@@ -11,12 +11,12 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         // Initialisation des managers
-        configManager = new ConfigManager(logManager);
+        configManager = new ConfigManager(logManager, fileManager);
         logManager = new LogManager(configManager);
         serverManager = new ServerManager(configManager, logManager);
         requestManager = new RequestManager(configManager, logManager);
-        responseManager = new ResponseManager(logManager);
-        fileManager = new FileManager(configManager, logManager);
+        responseManager = new ResponseManager();
+        fileManager = new FileManager();
 
         // Démarrage du serveur
         serverManager.startServer(args, requestManager, responseManager, fileManager);
