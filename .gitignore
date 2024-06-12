@@ -1,5 +1,6 @@
 ### Project ###
 /resources/myweb.ini
+/resources/config/myweb.conf
 /resources/log/log.txt
 
 ### IntelliJ IDEA ###
