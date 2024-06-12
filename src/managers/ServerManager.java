@@ -3,7 +3,6 @@ package managers;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 /**
  * Classe ServerManager.
@@ -11,8 +10,8 @@ import java.net.UnknownHostException;
  */
 public class ServerManager {
 
-    private ConfigManager configManager;
-    private LogManager logManager;
+    private final ConfigManager configManager;
+    private final LogManager logManager;
 
     /**
      * Constructeur de la classe ServerManager.
@@ -37,15 +36,20 @@ public class ServerManager {
         int serverPort = 80;
 
         // Vérifier si un port est spécifié dans la ligne de commande
-        if (args.length == 1) {
+        try {
+            serverPort = Integer.parseInt(args[0]);
+        } catch (Exception _) {
+            logManager.print("Numéro de port invalide, lecture du fichier de configuration...", LogManager.WARNING);
             try {
-                serverPort = Integer.parseInt(args[0]);
+                serverPort = Integer.parseInt(configManager.getConfigValue("/myweb/port"));
             } catch (Exception _) {
-                logManager.print("Numéro de port invalide, lecture du fichier de configuration...", LogManager.WARNING);
+                logManager.print("Fichier de configuration invalide, utilisation du port par défaut...", LogManager.WARNING);
             }
-        } else {
-            logManager.print("Numéro de port non précisé, lecture du fichier de configuration...", LogManager.WARNING);
-            serverPort = Integer.parseInt(configManager.getConfigValue("/myweb/port"));
+        }
+
+        if (serverPort < 0 || serverPort > 65535) {
+            logManager.print("Numéro de port invalide, utilisation du port par défaut...", LogManager.WARNING);
+            serverPort = 80;
         }
 
         // Démarrage du serveur
