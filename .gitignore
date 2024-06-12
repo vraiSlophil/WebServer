@@ -1,3 +1,7 @@
+### Project ###
+resources/myweb.ini
+resources/log/log.txt
+
 ### IntelliJ IDEA ###
 /.idea/*
 /.idea/
