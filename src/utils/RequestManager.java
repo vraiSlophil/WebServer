@@ -1,4 +1,4 @@
-package managers;
+package utils;
 
 import java.io.*;
 import java.net.Socket;
@@ -38,19 +38,36 @@ public class RequestManager {
             // Lire la première ligne de la requête
             String requestLine = in.readLine();
 
-            // Extraire l'URL de la requête
+            if (requestLine == null) {
+                return;
+            }
+
             String filePath = getFilePath(requestLine);
+            String askedFile = filePath;
+
+            if (!fileManager.fileExists(filePath)) {
+                filePath = configManager.getConfigValue("/myweb/error") + "/404.html";
+            }
+
 
             // Lire le contenu du fichier
-            byte[] content = fileManager.readFile(filePath);
+            byte[] content;
+            String status;
+            try {
+                content = fileManager.readFile(filePath);
+                status = filePath.endsWith("/404.html") ? "HTTP/1.1 404 Not Found" : "HTTP/1.1 200 OK";
+            } catch (Exception e) {
+                content = fileManager.readFile(configManager.getConfigValue("/myweb/error") + "/500.html");
+                status = "HTTP/1.1 500 Internal Server Error";
+            }
 
             // Déterminer le type de contenu en fonction de l'extension du fichier
             String contentType = getContentType(filePath);
 
             // Envoi de la réponse au client
-            responseManager.sendResponse(printWriter, outputStream, "HTTP/1.1 200 OK", contentType, content);
+            responseManager.sendResponse(printWriter, outputStream, status, contentType, content);
 
-            logManager.print(filePath + " a été demandé par le client " + clientSocket.getInetAddress(), LogManager.INFO);
+            logManager.print(askedFile + " a été demandé par le client " + clientSocket.getInetAddress() + " " + status, LogManager.INFO);
         } catch (Exception e) {
             logManager.print("Erreur lors de la gestion de la requête : " + e.getMessage(), LogManager.SEVERE);
             throw e;
@@ -66,14 +83,8 @@ public class RequestManager {
 
         // Lire le fichier correspondant à l'URL
         String filePathBase = configManager.getConfigValue("/myweb/root");
-        String filePath = filePathBase + url;
-        File file = new File(filePath);
 
-        // Si le fichier n'existe pas, renvoyer une erreur 404
-        if (!file.exists()) {
-            filePath = configManager.getConfigValue("/myweb/error") + "/404.html";
-        }
-        return filePath;
+        return filePathBase + url;
     }
 
     /**
