@@ -18,13 +18,12 @@ public class LogManager {
     public static final String SEVERE = "SEVERE";
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    private final ConfigManager configManager;
+    private ConfigManager configManager;
 
     /**
      * Constructeur de la classe LogManager.
-     * @param configManager Le manager de configuration.
      */
-    public LogManager(ConfigManager configManager) {
+    public LogManager() {
         this.configManager = configManager;
     }
 
@@ -60,5 +59,9 @@ public class LogManager {
         } catch (IOException e) {
             System.out.println("Erreur lors de l'écriture dans le fichier de log : " + e.getMessage());
         }
+    }
+
+    public void setConfigManager(ConfigManager configManager) {
+        this.configManager = configManager;
     }
 }

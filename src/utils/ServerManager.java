@@ -29,7 +29,6 @@ public class ServerManager {
      * @param args Les arguments de la ligne de commande.
      * @param requestManager Le manager de requêtes.
      * @param responseManager Le manager de réponses.
-     * @throws Exception Si une erreur se produit lors du démarrage du serveur.
      */
     public void startServer(String[] args, RequestManager requestManager, ResponseManager responseManager) throws Exception {
         int serverPort = 80;
@@ -65,7 +64,7 @@ public class ServerManager {
                         }
                     }).start();
                 } catch (Exception e) {
-                    logManager.print("Erreur lors de la gestion de la connexion client : " + e.getMessage(), LogManager.SEVERE);
+                    logManager.print(e.getMessage(), LogManager.SEVERE);
                 }
             }
         } catch (Exception e) {
@@ -84,7 +83,7 @@ public class ServerManager {
         try {
             requestManager.handleRequest(clientSocket, responseManager);
         } catch (Exception e) {
-            logManager.print("Erreur lors de la gestion de la connexion client : " + e.getMessage(), LogManager.SEVERE);
+            logManager.print(e.getMessage(), LogManager.SEVERE);
         } finally {
             try {
                 clientSocket.close();

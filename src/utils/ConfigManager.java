@@ -1,6 +1,7 @@
 package utils;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -10,6 +11,8 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
 import java.io.ByteArrayInputStream;
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -19,17 +22,16 @@ import java.util.Properties;
 public class ConfigManager {
 
     private static final String INI_FILE_PATH = "resources/myweb.ini";
-    private final LogManager logManager;
+    private LogManager logManager;
     private final FileManager fileManager;
     private Document configDoc;
 
     /**
      * Constructeur de la classe ConfigManager.
-     * @param logManager Le manager de logs.
+     *
      * @param fileManager Le manager de fichiers.
      */
-    public ConfigManager(LogManager logManager, FileManager fileManager) throws Exception {
-        this.logManager = logManager;
+    public ConfigManager(FileManager fileManager) throws Exception {
         this.fileManager = fileManager;
         loadConfigFile();
     }
@@ -78,5 +80,30 @@ public class ConfigManager {
 
         XPath xpath = XPathFactory.newInstance().newXPath();
         return (String) xpath.evaluate(xPathExpression, configDoc, XPathConstants.STRING);
+    }
+
+/**
+     * Récupère une valeur du fichier de configuration.
+     *
+     * @param xPathExpression l'expression XPath de l'élément à récupérer
+     * @return la valeur de l'élément
+     */
+    public List<String> getIPList(String xPathExpression) throws Exception {
+        if (configDoc == null) {
+            logManager.print("Erreur lors de la récupération de la liste d'IP : le document de configuration n'est pas chargé", LogManager.SEVERE);
+            return null;
+        }
+
+        XPath xpath = XPathFactory.newInstance().newXPath();
+        NodeList nodes = (NodeList) xpath.evaluate(xPathExpression, configDoc, XPathConstants.NODESET);
+        List<String> ipList = new ArrayList<>();
+        for (int i = 0; i < nodes.getLength(); i++) {
+            ipList.add(nodes.item(i).getTextContent());
+        }
+        return ipList;
+    }
+
+    public void setLogManager(LogManager logManager) {
+        this.logManager = logManager;
     }
 }
