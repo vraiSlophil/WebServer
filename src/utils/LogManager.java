@@ -29,8 +29,9 @@ public class LogManager {
 
     /**
      * Méthode pour imprimer un message dans le fichier de log.
+     *
      * @param message Le message à imprimer.
-     * @param level Le niveau du message (INFO, WARNING, SEVERE).
+     * @param level   Le niveau du message (INFO, WARNING, SEVERE).
      * @throws Exception Si une erreur se produit lors de l'écriture dans le fichier de log.
      */
     public void print(String message, String level) throws Exception {
@@ -39,21 +40,42 @@ public class LogManager {
 
         System.out.println(logMessage);
 
-        String logFilePath = (level.equals(ERROR)) ? configManager.getConfigValue("/myweb/errorlog") : configManager.getConfigValue("/myweb/log");
+        String logFilePath = configManager.getConfigValue("/myweb/log");
         if (logFilePath == null) {
-            System.out.println("Erreur lors de la récupération du chemin du fichier de log" + (level.equals(ERROR) ? " d'erreur" : ""));
+            System.out.println("Erreur lors de la récupération du chemin du fichier de log");
             return;
         }
 
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(logFilePath, true)))) {
             out.println(logMessage);
         } catch (IOException e) {
-            System.out.println("Erreur lors de l'écriture dans le fichier de log : " + e.getMessage());
+            throw new Exception("Erreur lors de l'écriture dans le fichier de log : " + e.getMessage());
+        }
+
+        if (level.equals(ERROR)) {
+            logFilePath = configManager.getConfigValue("/myweb/errorlog");
+            if (logFilePath == null) {
+                System.out.println("Erreur lors de la récupération du chemin du fichier de log d'erreur");
+                return;
+            }
+
+            try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(logFilePath, true)))) {
+                out.println(logMessage);
+                try {
+                    throw new Exception(message);
+                } catch (Exception e) {
+                    e.printStackTrace(out);
+                    e.printStackTrace();
+                }
+            } catch (IOException e) {
+                throw new Exception("Erreur lors de l'écriture dans le fichier de log d'erreur : " + e.getMessage());
+            }
         }
     }
 
     /**
      * Setter pour le ConfigManager.
+     *
      * @param configManager Le ConfigManager.
      */
     public void setConfigManager(ConfigManager configManager) {
