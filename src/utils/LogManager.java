@@ -14,8 +14,8 @@ import java.util.Date;
 public class LogManager {
 
     public static final String INFO = "INFO";
-    public static final String WARNING = "WARNING";
-    public static final String SEVERE = "SEVERE";
+    public static final String WARN = "WARN";
+    public static final String ERROR = "ERROR";
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     private ConfigManager configManager;
@@ -35,22 +35,13 @@ public class LogManager {
      */
     public void print(String message, String level) throws Exception {
         String timestamp = DATE_FORMAT.format(new Date());
-        String logMessage = timestamp + " - " + message;
-
-        logMessage = switch (level) {
-            case WARNING -> "WARN : " + logMessage;
-            case SEVERE -> {
-                logMessage = "ERROR : " + logMessage;
-                throw new Exception(logMessage);
-            }
-            default -> "INFO : " + logMessage;
-        };
+        String logMessage = timestamp + " [" + level + "] " + message;
 
         System.out.println(logMessage);
 
-        String logFilePath = configManager.getConfigValue("/myweb/log");
+        String logFilePath = (level.equals(ERROR)) ? configManager.getConfigValue("/myweb/errorlog") : configManager.getConfigValue("/myweb/log");
         if (logFilePath == null) {
-            System.out.println("Erreur lors de la récupération du chemin du fichier de log");
+            System.out.println("Erreur lors de la récupération du chemin du fichier de log" + (level.equals(ERROR) ? " d'erreur" : ""));
             return;
         }
 
@@ -61,6 +52,10 @@ public class LogManager {
         }
     }
 
+    /**
+     * Setter pour le ConfigManager.
+     * @param configManager Le ConfigManager.
+     */
     public void setConfigManager(ConfigManager configManager) {
         this.configManager = configManager;
     }

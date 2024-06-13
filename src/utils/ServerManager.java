@@ -37,16 +37,16 @@ public class ServerManager {
         try {
             serverPort = Integer.parseInt(args[0]);
         } catch (Exception _) {
-            logManager.print("Numéro de port invalide, lecture du fichier de configuration...", LogManager.WARNING);
+            logManager.print("Numéro de port invalide, lecture du fichier de configuration...", LogManager.WARN);
             try {
                 serverPort = Integer.parseInt(configManager.getConfigValue("/myweb/port"));
             } catch (Exception _) {
-                logManager.print("Fichier de configuration invalide, utilisation du port par défaut...", LogManager.WARNING);
+                logManager.print("Fichier de configuration invalide, utilisation du port par défaut...", LogManager.WARN);
             }
         }
 
         if (serverPort < 0 || serverPort > 65535) {
-            logManager.print("Numéro de port invalide, utilisation du port par défaut...", LogManager.WARNING);
+            logManager.print("Numéro de port invalide, utilisation du port par défaut...", LogManager.WARN);
             serverPort = 80;
         }
 
@@ -64,11 +64,11 @@ public class ServerManager {
                         }
                     }).start();
                 } catch (Exception e) {
-                    logManager.print(e.getMessage(), LogManager.SEVERE);
+                    logManager.print("Erreur lors de la connexion d'un client : " + e.getMessage(), LogManager.ERROR);
                 }
             }
         } catch (Exception e) {
-            logManager.print("Erreur du serveur : " + e.getMessage(), LogManager.SEVERE);
+            logManager.print("Erreur du serveur : " + e.getMessage(), LogManager.ERROR);
         }
     }
 
@@ -83,12 +83,12 @@ public class ServerManager {
         try {
             requestManager.handleRequest(clientSocket, responseManager);
         } catch (Exception e) {
-            logManager.print(e.getMessage(), LogManager.SEVERE);
+            logManager.print("Erreur lors de la gestion de la requête : " + e.getMessage(), LogManager.ERROR);
         } finally {
             try {
                 clientSocket.close();
             } catch (Exception e) {
-                logManager.print("Erreur lors de la fermeture du socket client : " + e.getMessage(), LogManager.SEVERE);
+                logManager.print("Erreur lors de la fermeture du socket client : " + e.getMessage(), LogManager.ERROR);
             }
         }
     }

@@ -127,20 +127,25 @@ public class RequestManager {
         byte[] content;
         String status;
         try {
-            content = fileManager.readFile(filePath);
-            status = filePath.endsWith("/403.html") ? HTTP_403_FORBIDDEN : (fileManager.fileExists(filePath)) ? HTTP_200_OK : HTTP_404_NOT_FOUND;
-            if (filePath.endsWith("serverStatus.html")) {
-                writeStatusToFile();
+            if (!fileManager.fileExists(filePath)) {
+                filePath = configManager.getConfigValue("/myweb/error") + "/404.html";
+                status = HTTP_404_NOT_FOUND;
+            } else {
+                content = fileManager.readFile(filePath);
+                status = filePath.endsWith("/403.html") ? HTTP_403_FORBIDDEN : HTTP_200_OK;
+                if (filePath.endsWith("serverStatus.html")) {
+                    writeStatusToFile();
+                }
             }
         } catch (Exception e) {
-            content = fileManager.readFile(configManager.getConfigValue("/myweb/error") + "/500.html");
+            filePath = configManager.getConfigValue("/myweb/error") + "/500.html";
             status = HTTP_500_INTERNAL_SERVER_ERROR;
         }
 
+        content = fileManager.readFile(filePath);
         String contentType = getContentType(filePath);
         responseManager.sendResponse(new PrintWriter(clientSocket.getOutputStream(), true), clientSocket.getOutputStream(), status, contentType, content);
-//        logManager.print(askedFile + " a été demandé par le client " + clientSocket.getInetAddress() + " " + status, LogManager.INFO);
-        logManager.print(askedFile + " a été demandé par le client " + clientSocket.getInetAddress() + " " + status, (!status.equals(HTTP_200_OK) ? ((status.equals(HTTP_403_FORBIDDEN) || status.equals(HTTP_404_NOT_FOUND)) ? LogManager.WARNING : LogManager.SEVERE) : LogManager.INFO));
+        logManager.print(askedFile + " a été demandé par le client " + clientSocket.getInetAddress() + " " + status, (!status.equals(HTTP_200_OK) ? ((status.equals(HTTP_403_FORBIDDEN) || status.equals(HTTP_404_NOT_FOUND)) ? LogManager.WARN : LogManager.ERROR) : LogManager.INFO));
     }
 
 

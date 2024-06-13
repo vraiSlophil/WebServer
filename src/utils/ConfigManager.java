@@ -47,7 +47,7 @@ public class ConfigManager {
      */
     private void loadConfigFile() throws Exception {
         if (!fileManager.fileExists(INI_FILE_PATH)) {
-            logManager.print("Le fichier de configuration n'existe pas ou n'est pas un fichier valide : " + INI_FILE_PATH, LogManager.SEVERE);
+            logManager.print("Le fichier de configuration n'existe pas ou n'est pas un fichier valide : " + INI_FILE_PATH, LogManager.ERROR);
             return;
         }
 
@@ -57,7 +57,7 @@ public class ConfigManager {
         String configFilePath = properties.getProperty("cfgfile");
 
         if (!fileManager.fileExists(configFilePath)) {
-            logManager.print("Le fichier de configuration n'existe pas ou n'est pas un fichier valide : " + configFilePath, LogManager.SEVERE);
+            logManager.print("Le fichier de configuration n'existe pas ou n'est pas un fichier valide : " + configFilePath, LogManager.ERROR);
             return;
         }
 
@@ -74,7 +74,7 @@ public class ConfigManager {
      */
     public String getConfigValue(String xPathExpression) throws Exception {
         if (configDoc == null) {
-            logManager.print("Erreur lors de la récupération de la valeur de configuration : le document de configuration n'est pas chargé", LogManager.SEVERE);
+            logManager.print("Erreur lors de la récupération de la valeur de configuration : le document de configuration n'est pas chargé", LogManager.ERROR);
             return null;
         }
 
@@ -90,7 +90,7 @@ public class ConfigManager {
      */
     public List<String> getIPList(String xPathExpression) throws Exception {
         if (configDoc == null) {
-            logManager.print("Erreur lors de la récupération de la liste d'IP : le document de configuration n'est pas chargé", LogManager.SEVERE);
+            logManager.print("Erreur lors de la récupération de la liste d'IP : le document de configuration n'est pas chargé", LogManager.ERROR);
             return null;
         }
 

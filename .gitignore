@@ -1,8 +1,7 @@
 ### Project ###
 /resources/myweb.ini
 /resources/config/myweb.conf
-/resources/log/
-*.txt
+/resources/log/*.txt
 /resources/html/system_status.json
 
 ### IntelliJ IDEA ###
