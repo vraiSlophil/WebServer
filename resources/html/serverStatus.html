@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>État de la machine</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin: 50px auto auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        h2 {
+            font-size: 1.2em;
+            color: #666;
+        }
+
+
+        .progress-bar div {
+            height: 100%;
+            background-color: #4CAF50;
+            text-align: center;
+            line-height: 20px;
+            color: white;
+            position: absolute;
+        }
+
+        .progress-bar {
+            background-color: #FFFFFF;
+            border: 2px solid black;
+            border-radius: 10px;
+            position: relative;
+            width: 80%;
+            height: 30px;
+            overflow: hidden;
+        }
+
+        .progress-bar p {
+            position: absolute;
+            text-align: center;
+            color: #000000;
+            width: 100%;
+            font-size: 1.5em;
+            line-height: 20px;
+            padding: 5px;
+            margin: 0;
+        }
+
+        #processors-chart {
+            width: 20px;
+            height: 20px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+        }
+
+        .column {
+            width: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="column">
+        <h1>État de la machine</h1>
+        <h2>Charge du système</h2>
+        <p id="systemLoad-info"><i id="systemLoad-icon" class="fas fa-ban" style="display: none;"></i></p>
+        <h2>Processeurs disponibles</h2>
+        <div style="width:150px;height:150px">
+            <canvas id="processors-chart"></canvas>
+        </div>
+    </div>
+    <div class="column">
+        <h2>RAM utilisée</h2>
+        <div class="progress-bar">
+            <div id="ram-bar"></div>
+            <p id="ram-text"></p>
+        </div>
+        <h2>Espace disque (en Go)</h2>
+        <div style="width:150px;height:150px">
+            <canvas id="diskSpace-chart"></canvas>
+        </div>
+    </div>
+</div>
+<script>
+    function updateProgressBar(id, textId, value, max) {
+        var bar = document.getElementById(id);
+        var percentage = (value / max) * 100;
+        bar.style.width = percentage + '%';
+
+        var textbar = document.getElementById(textId);
+        textbar.innerText = value + ' / ' + max;
+    }
+
+    function loadStatus() {
+        fetch('/system_status.json')
+            .then(response => response.json())
+            .then(data => {
+                var ctx = document.getElementById('processors-chart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: ['Processeurs disponibles'],
+                        datasets: [{
+                            data: [data.processors],
+                            backgroundColor: ['rgb(75, 192, 192)']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            }
+                        }
+                    }
+                });
+
+                var systemLoad = data.systemLoad < 0 ? 'Non disponible' : data.systemLoad;
+                document.getElementById('systemLoad-info').textContent = 'Charge du système : ' + systemLoad;
+                //document.getElementById('systemLoad-icon').style.display = data.systemLoad < 0 ? 'inline' : 'none';
+
+                updateProgressBar('ram-bar', 'ram-text', data.usedHeapMemory, data.maxHeapMemory);
+
+                var usedDiskSpaceGB = (data.usedDiskSpace / 1000000000).toFixed(2);
+                var totalDiskSpaceGB = (data.totalDiskSpace / 1000000000).toFixed(2);
+
+                new Chart(document.getElementById('diskSpace-chart').getContext('2d'), {
+                    type: 'pie',
+                    data: {
+                        labels: ['Espace utilisé', 'Espace disponible'],
+                        datasets: [{
+                            data: [usedDiskSpaceGB, totalDiskSpaceGB],
+                            backgroundColor: ['rgb(255, 99, 132)', 'rgb(75, 192, 192)']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => console.error('Error loading status:', error));
+    }
+
+    window.onload = loadStatus;
+</script>
+</body>
+</html>
