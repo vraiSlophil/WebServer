@@ -64,16 +64,16 @@ public class RequestManager {
 
     private void writeStatusToFile() throws Exception {
         Map<String, String> status = getSystemStatus();
-        String json = "{\n";
+        StringBuilder json = new StringBuilder("{\n");
         for (Map.Entry<String, String> entry : status.entrySet()) {
-            json += "  \"" + entry.getKey() + "\": \"" + entry.getValue() + "\",\n";
+            json.append("  \"").append(entry.getKey()).append("\": \"").append(entry.getValue()).append("\",\n");
         }
-        json = json.substring(0, json.length() - 2); // Enlève la dérnière virgule
-        json += "\n}";
+        json = new StringBuilder(json.substring(0, json.length() - 2)); // Enlève la dérnière virgule
+        json.append("\n}");
 
         // Ecris le json et le met dans le fichier system_status.json
         try (FileWriter file = new FileWriter(configManager.getConfigValue("/myweb/root") + "/system_status.json")) {
-            file.write(json);
+            file.write(json.toString());
         }
     }
 

@@ -163,3 +163,7 @@ INFO : 2024-06-13 13:52:31 - D:\DEV PROJECT\IdeaProjects\WebServer\resources\htm
 INFO : 2024-06-13 13:52:33 - D:\DEV PROJECT\IdeaProjects\WebServer\resources\html/index.html a été demandé par le client /192.168.1.33 HTTP/1.1 200 OK
 INFO : 2024-06-13 13:52:33 - D:\DEV PROJECT\IdeaProjects\WebServer\resources\html/css/css.css a été demandé par le client /192.168.1.33 HTTP/1.1 200 OK
 INFO : 2024-06-13 13:52:36 - D:\DEV PROJECT\IdeaProjects\WebServer\resources\html/in a été demandé par le client /192.168.1.33 HTTP/1.1 404 Not Found
+WARN : 2024-06-13 17:59:14 - Numéro de port invalide, lecture du fichier de configuration...
+INFO : 2024-06-13 17:59:14 - Démarrage du serveur sur : http://192.168.1.33:8888/
+INFO : 2024-06-13 17:59:18 - D:\DEV PROJECT\IdeaProjects\WebServer\resources\html/serverStatus.html a été demandé par le client /192.168.1.33 HTTP/1.1 200 OK
+INFO : 2024-06-13 17:59:18 - D:\DEV PROJECT\IdeaProjects\WebServer\resources\html/system_status.json a été demandé par le client /192.168.1.33 HTTP/1.1 200 OK
