@@ -31,10 +31,6 @@
             color: #333;
         }
 
-        h2 {
-            font-size: 1.2em;
-            color: #666;
-        }
 
 
         .progress-bar div {
@@ -74,8 +70,9 @@
 
         .container {
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
             justify-content: space-between;
+            align-items: center;
 
         }
 
@@ -86,30 +83,48 @@
             justify-content: center;
             align-items: center;
         }
+
+        .row {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
 <div class="container">
-    <div class="column">
-        <h1>État de la machine</h1>
-        <h2>Charge du système</h2>
-        <p id="systemLoad-info"><i id="systemLoad-icon" class="fas fa-ban" style="display: none;"></i></p>
-        <h2>Processeurs disponibles</h2>
-        <div style="width:150px;height:150px">
-            <canvas id="processors-chart"></canvas>
+    <h1>État de la machine</h1>
+
+    <div class="row">
+        <div class="column">
+            <h2>Charge du système</h2>
+            <p id="systemLoad-info"><i id="systemLoad-icon" class="fas fa-ban" style="display: none;"></i></p>
+        </div>
+        <div class="column">
+            <h2>RAM utilisée</h2>
+            <div class="progress-bar">
+                <div id="ram-bar"></div>
+                <p id="ram-text"></p>
+            </div>
         </div>
     </div>
-    <div class="column">
-        <h2>RAM utilisée</h2>
-        <div class="progress-bar">
-            <div id="ram-bar"></div>
-            <p id="ram-text"></p>
+    <div class="row">
+        <div class="column">
+            <h2>Processeurs disponibles</h2>
+            <div style="width:150px;height:150px">
+                <canvas id="processors-chart"></canvas>
+            </div>
         </div>
-        <h2>Espace disque (en Go)</h2>
-        <div style="width:150px;height:150px">
-            <canvas id="diskSpace-chart"></canvas>
+        <div class="column">
+            <h2>Espace disque (en Go)</h2>
+            <div style="width:150px;height:150px">
+                <canvas id="diskSpace-chart"></canvas>
+            </div>
         </div>
     </div>
+</div>
 </div>
 <script>
     function updateProgressBar(id, textId, value, max) {
