@@ -1,4 +1,4 @@
-package managers;
+package utils;
 
 import java.io.*;
 import java.lang.management.ManagementFactory;
@@ -18,15 +18,17 @@ public class RequestManager {
 
     private final ConfigManager configManager;
     private final LogManager logManager;
+    private final FileManager fileManager;
 
     /**
      * Constructeur de la classe RequestManager.
      * @param configManager Le manager de configuration.
      * @param logManager Le manager de logs.
      */
-    public RequestManager(ConfigManager configManager, LogManager logManager) {
+    public RequestManager(ConfigManager configManager, LogManager logManager, FileManager fileManager) {
         this.configManager = configManager;
         this.logManager = logManager;
+        this.fileManager = fileManager;
     }
 
     private Map<String, String> getSystemStatus() throws Exception {
@@ -70,7 +72,7 @@ public class RequestManager {
         json += "\n}";
 
         // Ecris le json et le met dans le fichier system_status.json
-        try (FileWriter file = new FileWriter("resources/html/system_status.json")) {
+        try (FileWriter file = new FileWriter(configManager.getConfigValue("/myweb/root") + "/system_status.json")) {
             file.write(json);
         }
     }
@@ -80,10 +82,9 @@ public class RequestManager {
      * Méthode pour gérer une requête.
      * @param clientSocket Le socket client.
      * @param responseManager Le manager de réponses.
-     * @param fileManager Le manager de fichiers.
      * @throws Exception Si une erreur se produit lors de la gestion de la requête.
      */
-    public void handleRequest(Socket clientSocket, ResponseManager responseManager, FileManager fileManager) throws Exception {
+    public void handleRequest(Socket clientSocket, ResponseManager responseManager) throws Exception {
         try {
             BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             OutputStream outputStream = clientSocket.getOutputStream();
@@ -102,7 +103,6 @@ public class RequestManager {
             if (!fileManager.fileExists(filePath)) {
                 filePath = configManager.getConfigValue("/myweb/error") + "/404.html";
             }
-
 
             // Générer et écrire le statut du système dans un fichier JSON
             if (filePath.endsWith("serverStatus.html")) {
@@ -146,14 +146,8 @@ public class RequestManager {
 
         // Lire le fichier correspondant à l'URL
         String filePathBase = configManager.getConfigValue("/myweb/root");
-        String filePath = filePathBase + url;
-        File file = new File(filePath);
 
-        // Si le fichier n'existe pas, renvoyer une erreur 404
-        if (!file.exists()) {
-            filePath = configManager.getConfigValue("/myweb/error") + "/404.html";
-        }
-        return filePath;
+        return filePathBase + url;
     }
 
     /**

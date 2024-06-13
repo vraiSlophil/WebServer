@@ -29,10 +29,9 @@ public class ServerManager {
      * @param args Les arguments de la ligne de commande.
      * @param requestManager Le manager de requêtes.
      * @param responseManager Le manager de réponses.
-     * @param fileManager Le manager de fichiers.
      * @throws Exception Si une erreur se produit lors du démarrage du serveur.
      */
-    public void startServer(String[] args, RequestManager requestManager, ResponseManager responseManager, FileManager fileManager) throws Exception {
+    public void startServer(String[] args, RequestManager requestManager, ResponseManager responseManager) throws Exception {
         int serverPort = 80;
 
         // Vérifier si un port est spécifié dans la ligne de commande
@@ -60,7 +59,7 @@ public class ServerManager {
                     Socket clientSocket = serverSocket.accept();
                     new Thread(() -> {
                         try {
-                            handleClient(clientSocket, requestManager, responseManager, fileManager);
+                            handleClient(clientSocket, requestManager, responseManager);
                         } catch (Exception e) {
                             throw new RuntimeException(e);
                         }
@@ -81,9 +80,9 @@ public class ServerManager {
      * @param clientSocket Le socket client.
      * @throws Exception Si une erreur se produit lors de la gestion du client.
      */
-    private void handleClient(Socket clientSocket, RequestManager requestManager, ResponseManager responseManager, FileManager fileManager) throws Exception {
+    private void handleClient(Socket clientSocket, RequestManager requestManager, ResponseManager responseManager) throws Exception {
         try {
-            requestManager.handleRequest(clientSocket, responseManager, fileManager);
+            requestManager.handleRequest(clientSocket, responseManager);
         } catch (Exception e) {
             logManager.print("Erreur lors de la gestion de la connexion client : " + e.getMessage(), LogManager.SEVERE);
         } finally {

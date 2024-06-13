@@ -15,11 +15,11 @@ public class Main {
         configManager = new ConfigManager(logManager, fileManager);
         logManager = new LogManager(configManager);
         serverManager = new ServerManager(configManager, logManager);
-        requestManager = new RequestManager(configManager, logManager);
+        requestManager = new RequestManager(configManager, logManager, fileManager);
         responseManager = new ResponseManager();
 
         // Démarrage du serveur
-        serverManager.startServer(args, requestManager, responseManager, fileManager);
+        serverManager.startServer(args, requestManager, responseManager);
     }
 
     public static ConfigManager getConfigManager() {
