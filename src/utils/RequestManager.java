@@ -14,6 +14,9 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static utils.ImageEncoder.encodeImageFile;
+import static utils.ImageEncoder.generateImgTag;
+
 /**
  * Classe RequestManager.
  * Cette classe est responsable de la gestion des requêtes.
@@ -127,12 +130,14 @@ public class RequestManager {
         byte[] content = null;
         String status;
         try {
+            // Vérifier si le fichier existe
             if (!fileManager.fileExists(filePath)) {
+                // Définir le chemin du fichier à la page d'erreur 404
                 filePath = configManager.getConfigValue("/myweb/error") + "/404.html";
                 status = HTTP_404_NOT_FOUND;
             } else {
+                // Définir le statut de la réponse à 200 OK
                 status = filePath.endsWith("/403.html") ? HTTP_403_FORBIDDEN : HTTP_200_OK;
-
 
 
                 if (filePath.endsWith("serverStatus.html")) {
@@ -147,23 +152,31 @@ public class RequestManager {
         content = fileManager.readFile(filePath);
         String fileContent = new String(content);
 
+        // Exécute le code dynamique
         if (fileContent.contains("<code")) {
             fileContent = HtmlCodeExecutor.processDynamicCode(fileContent);
             content = fileContent.getBytes();
         }
 
+        // Ajoute dans les balises <img> le code base64 de l'image
+        if (fileContent.contains("<img")) {
+            fileContent = ImageEncoder.processImageTag(fileContent, fileManager);
+            content = fileContent.getBytes();
+        }
+
+        // Récupère le type de contenu
         String contentType = getContentType(filePath);
-        boolean isBase64Encoding = contentType.startsWith("image/");
-        if (contentType.startsWith("image/")) {
-            content = Base64.getEncoder().encode(content);
+
+        // Encode les images en base64
+        boolean isBase64Encoding = filePath.endsWith(".jpg") || filePath.endsWith(".jpeg") || filePath.endsWith(".png") || filePath.endsWith(".gif");
+        if (isBase64Encoding) {
+            String imageString = Base64.getEncoder().withoutPadding().encodeToString(content);
+            content = imageString.getBytes();
         }
 
         responseManager.sendResponse(new PrintWriter(clientSocket.getOutputStream(), true), clientSocket.getOutputStream(), status, contentType, content, isBase64Encoding);
         logManager.print(askedFile + " a été demandé par le client " + clientSocket.getInetAddress() + " " + status, (!status.equals(HTTP_200_OK) ? ((status.equals(HTTP_403_FORBIDDEN) || status.equals(HTTP_404_NOT_FOUND)) ? LogManager.WARN : LogManager.ERROR) : LogManager.INFO));
-
     }
-
-
 
 
     /**

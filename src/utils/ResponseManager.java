@@ -30,9 +30,9 @@ public class ResponseManager {
         printWriter.println("Content-Type: " + contentType);
         if (isBase64Encoding) {
             printWriter.println("Content-Encoding: base64");
-        } else {
-            printWriter.println("Connection: close");
         }
+        printWriter.println("Connection: close");
+
         printWriter.println();
 
         outputStream.write(content);
