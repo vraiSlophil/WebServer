@@ -1,18 +1,18 @@
 package utils;
 
-import java.io.BufferedReader;
-import java.io.FileWriter;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryUsage;
 import java.lang.management.OperatingSystemMXBean;
 import java.net.Socket;
 import java.nio.file.FileStore;
 import java.nio.file.FileSystems;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Classe RequestManager.
@@ -124,7 +124,7 @@ public class RequestManager {
             filePath = configManager.getConfigValue("/myweb/error") + "/403.html";
         }
 
-        byte[] content;
+        byte[] content = null;
         String status;
         try {
             if (!fileManager.fileExists(filePath)) {
@@ -132,6 +132,9 @@ public class RequestManager {
                 status = HTTP_404_NOT_FOUND;
             } else {
                 status = filePath.endsWith("/403.html") ? HTTP_403_FORBIDDEN : HTTP_200_OK;
+
+
+
                 if (filePath.endsWith("serverStatus.html")) {
                     writeStatusToFile();
                 }
@@ -142,11 +145,25 @@ public class RequestManager {
         }
 
         content = fileManager.readFile(filePath);
+        String fileContent = new String(content);
+
+        if (fileContent.contains("<code")) {
+            fileContent = HtmlCodeExecutor.processDynamicCode(fileContent);
+            content = fileContent.getBytes();
+        }
+
         String contentType = getContentType(filePath);
-        responseManager.sendResponse(new PrintWriter(clientSocket.getOutputStream(), true), clientSocket.getOutputStream(), status, contentType, content);
+        boolean isBase64Encoding = contentType.startsWith("image/");
+        if (contentType.startsWith("image/")) {
+            content = Base64.getEncoder().encode(content);
+        }
+
+        responseManager.sendResponse(new PrintWriter(clientSocket.getOutputStream(), true), clientSocket.getOutputStream(), status, contentType, content, isBase64Encoding);
         logManager.print(askedFile + " a été demandé par le client " + clientSocket.getInetAddress() + " " + status, (!status.equals(HTTP_200_OK) ? ((status.equals(HTTP_403_FORBIDDEN) || status.equals(HTTP_404_NOT_FOUND)) ? LogManager.WARN : LogManager.ERROR) : LogManager.INFO));
 
     }
+
+
 
 
     /**
@@ -169,45 +186,45 @@ public class RequestManager {
      * Vérifie si l'adresse IP du client est dans un sous-réseau donné.
      *
      * @param clientIP l'adresse IP du client au format xxx.xxx.xxx.xxx
-     * @param ipList  la liste des adresses IP au format xxx.xxx.xxx.xxx/xxx où /xxx est le masque de sous-réseau
+     * @param ipList   la liste des adresses IP au format xxx.xxx.xxx.xxx/xxx où /xxx est le masque de sous-réseau
      * @return true si l'adresse IP du client est dans un sous-réseau donné, false sinon
      */
     private boolean isIPInSubnet(String clientIP, List<String> ipList) {
-    int[] clientIPArray = new int[4];
-    String[] clientIPSplit = clientIP.split("\\.");
-    for (int i = 0; i < 4; i++) {
-        clientIPArray[i] = Integer.parseInt(clientIPSplit[i]);
-    }
-
-    for (String ip : ipList) {
-        String[] ipSplit = ip.split("/");
-        int[] ipArray = new int[4];
-        String[] ipSplitArray = ipSplit[0].split("\\.");
+        int[] clientIPArray = new int[4];
+        String[] clientIPSplit = clientIP.split("\\.");
         for (int i = 0; i < 4; i++) {
-            ipArray[i] = Integer.parseInt(ipSplitArray[i]);
+            clientIPArray[i] = Integer.parseInt(clientIPSplit[i]);
         }
-        int masqueReseau = Integer.parseInt(ipSplit[1]);
 
-        int masqueReseauOctet = masqueReseau / 8;
-        int masqueReseauBit = masqueReseau % 8;
-
-        for (int i = 0; i < masqueReseauOctet; i++) {
-            if (clientIPArray[i] != ipArray[i]) {
-                return false;
+        for (String ip : ipList) {
+            String[] ipSplit = ip.split("/");
+            int[] ipArray = new int[4];
+            String[] ipSplitArray = ipSplit[0].split("\\.");
+            for (int i = 0; i < 4; i++) {
+                ipArray[i] = Integer.parseInt(ipSplitArray[i]);
             }
-        }
+            int masqueReseau = Integer.parseInt(ipSplit[1]);
 
-        if (masqueReseauBit != 0) {
-            int mask = 0xFF << (8 - masqueReseauBit);
-            if ((clientIPArray[masqueReseauOctet] & mask) != (ipArray[masqueReseauOctet] & mask)) {
-                return false;
+            int masqueReseauOctet = masqueReseau / 8;
+            int masqueReseauBit = masqueReseau % 8;
+
+            for (int i = 0; i < masqueReseauOctet; i++) {
+                if (clientIPArray[i] != ipArray[i]) {
+                    return false;
+                }
             }
-        }
 
-        return true;
+            if (masqueReseauBit != 0) {
+                int mask = 0xFF << (8 - masqueReseauBit);
+                if ((clientIPArray[masqueReseauOctet] & mask) != (ipArray[masqueReseauOctet] & mask)) {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+        return false;
     }
-    return false;
-}
 
     /**
      * Récupère le chemin d'accès au fichier demandé.
@@ -225,6 +242,10 @@ public class RequestManager {
 
         if (url.equals("/status")) {
             url = "/serverStatus.html";
+        }
+
+        if (url.equals("/code")) {
+            url = "/code.html";
         }
 
         // Lire le fichier correspondant à l'URL
