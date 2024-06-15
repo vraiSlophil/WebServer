@@ -4,6 +4,7 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
+
         // Initialisation des managers
         FileManager fileManager = new FileManager();
         LogManager logManager = new LogManager();
@@ -15,6 +16,9 @@ public class Main {
         fileManager.setLogManager(logManager);
 
         configManager.loadConfigFile();
+
+        DeploymentAutomation deploymentAutomation = new DeploymentAutomation(fileManager, logManager);
+        deploymentAutomation.setup();
 
         // Création et exécution des générateurs de fichiers
         ConfigFileGenerator configFileGenerator = new ConfigFileGenerator(fileManager);

@@ -1,0 +1,15 @@
+[Unit]
+Description=My Web Server
+After=network.target
+
+[Service]
+User=
+WorkingDirectory=/usr/local/sbin/myweb
+ExecStart=/usr/bin/java -jar mywebserver.jar
+SuccessExitStatus=143
+TimeoutStopSec=10
+Restart=on-failure
+PIDFile=/var/run/myweb.pid
+
+[Install]
+WantedBy=multi-user.target
