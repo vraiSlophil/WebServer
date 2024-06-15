@@ -1,7 +1,16 @@
 import utils.*;
 
+/**
+ * Classe Main.
+ * Cette classe est responsable de l'exécution du serveur web.
+ */
 public class Main {
 
+    /**
+     * Méthode principale.
+     * @param args Les arguments de la ligne de commande.
+     * @throws Exception Si une erreur survient lors de l'exécution du serveur.
+     */
     public static void main(String[] args) throws Exception {
 
 

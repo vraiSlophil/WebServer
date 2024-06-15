@@ -127,7 +127,6 @@ public class RequestManager {
             filePath = configManager.getConfigValue("/myweb/error") + "/403.html";
         }
 
-        byte[] content = null;
         String status;
         try {
             // Vérifier si le fichier existe
@@ -149,7 +148,7 @@ public class RequestManager {
             status = HTTP_500_INTERNAL_SERVER_ERROR;
         }
 
-        content = fileManager.readFile(filePath);
+        byte[] content = fileManager.readFile(filePath);
         String fileContent = new String(content);
 
         // Exécute le code dynamique

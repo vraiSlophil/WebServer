@@ -2,26 +2,32 @@ package utils;
 
 import java.io.InputStream;
 
+/**
+ * Classe FileGenerator.
+ * Cette classe est responsable de la génération des fichiers nécessaires au serveur web.
+ */
 public class FileGenerator {
 
     private final ConfigManager configManager;
     private final FileManager fileManager;
 
+    /**
+     * Constructeur de la classe FileGenerator.
+     * @param configManager Le gestionnaire de configuration.
+     * @param fileManager Le gestionnaire de fichiers.
+     */
     public FileGenerator(ConfigManager configManager, FileManager fileManager) {
         this.configManager = configManager;
         this.fileManager = fileManager;
-//        try {
-//            this.configManager.loadConfigFile();
-//        } catch (Exception e) {
-//            System.out.println("Erreur lors du chargement du fichier de configuration : " + e.getMessage());
-//        }
     }
 
+    /**
+     * Méthode pour générer les fichiers nécessaires au serveur web.
+     * @throws Exception Si une erreur survient lors de la génération des fichiers.
+     */
     public void generateFiles() throws Exception {
         String rootPath = configManager.getConfigValue("/myweb/root");
-//        System.out.println("Root path: " + rootPath);
         String errorPath = configManager.getConfigValue("/myweb/error");
-//        System.out.println("Error path: " + errorPath);
 
         // Copier les fichiers d'erreur s'ils n'existent pas déjà
         InputStream error403Stream = getClass().getResourceAsStream("/error/403.html");

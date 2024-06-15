@@ -4,6 +4,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * Classe DeploymentAutomation.
+ * Cette classe est responsable de l'automatisation du déploiement du serveur web.
+ */
 public class DeploymentAutomation {
 
     private static final String WEB_SERVER_JAR_PATH = System.getProperty("user.dir") + "/WebServer.jar";
@@ -14,11 +18,20 @@ public class DeploymentAutomation {
     private final FileManager fileManager;
     private final LogManager logManager;
 
+    /**
+     * Constructeur de la classe DeploymentAutomation.
+     * @param fileManager Le gestionnaire de fichiers.
+     * @param logManager Le gestionnaire de logs.
+     */
     public DeploymentAutomation(FileManager fileManager, LogManager logManager) {
         this.fileManager = fileManager;
         this.logManager = logManager;
     }
 
+    /**
+     * Méthode pour automatiser le déploiement du serveur web.
+     * @throws Exception Si une erreur survient lors de l'automatisation du déploiement.
+     */
     public void setup() throws Exception {
         logManager.print("Setting up...", LogManager.INFO);
         String os = System.getProperty("os.name").toLowerCase();
@@ -33,6 +46,10 @@ public class DeploymentAutomation {
         createDebianPackage();
     }
 
+    /**
+     * Méthode pour créer le service systemd.
+     * @throws Exception Si une erreur survient lors de la création du service systemd.
+     */
     private void createSystemdService() throws Exception {
         logManager.print("Création du service systemd...", LogManager.INFO);
         // Vérifier si le service systemd existe déjà
@@ -53,6 +70,10 @@ public class DeploymentAutomation {
         executeCommand("sudo systemctl enable myweb.service");
     }
 
+    /**
+     * Méthode pour créer le package Debian.
+     * @throws Exception Si une erreur survient lors de la création du package Debian.
+     */
     private void createDebianPackage() throws Exception {
         logManager.print("Création du package Debian...", LogManager.INFO);
 
@@ -89,11 +110,21 @@ public class DeploymentAutomation {
         executeCommand("rm -rf myweb");
     }
 
+    /**
+     * Méthode pour créer le fichier PID.
+     * @throws Exception Si une erreur survient lors de la création du fichier PID.
+     */
     private void createPIDFile() throws Exception {
         logManager.print("Création du fichier PID...", LogManager.INFO);
         executeCommand("echo $$ > /var/run/myweb.pid");
     }
 
+    /**
+     * Méthode pour exécuter une commande système.
+     * @param command La commande à exécuter.
+     * @return Le code de retour de la commande.
+     * @throws Exception Si une erreur survient lors de l'exécution de la commande.
+     */
     private int executeCommand(String command) throws Exception {
         String os = System.getProperty("os.name").toLowerCase();
 
@@ -113,6 +144,11 @@ public class DeploymentAutomation {
         return process.waitFor();
     }
 
+    /**
+     * Méthode pour créer un répertoire.
+     * @param directoryPath Le chemin du répertoire à créer.
+     * @throws Exception Si une erreur survient lors de la création du répertoire.
+     */
     private void createDirectory(String directoryPath) throws Exception {
         logManager.print("Création du dossier parent : " + directoryPath, LogManager.INFO);
         if (executeCommand("mkdir -p " + directoryPath) != 0) {
