@@ -1,9 +1,6 @@
 package utils;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -24,14 +21,13 @@ public class LogManager {
      * Constructeur de la classe LogManager.
      */
     public LogManager() {
-        this.configManager = configManager;
     }
 
     /**
      * Méthode pour imprimer un message dans le fichier de log.
      *
      * @param message Le message à imprimer.
-     * @param level   Le niveau du message (INFO, WARNING, SEVERE).
+     * @param level   Le niveau du message (INFO, WARN, ERROR).
      * @throws Exception Si une erreur se produit lors de l'écriture dans le fichier de log.
      */
     public void print(String message, String level) throws Exception {
@@ -40,10 +36,20 @@ public class LogManager {
 
         System.out.println(logMessage);
 
-        String logFilePath = configManager.getConfigValue("/myweb/log");
+        String logFilePath = configManager.getConfigValue("/myweb/accesslog");
         if (logFilePath == null) {
-            System.out.println("Erreur lors de la récupération du chemin du fichier de log");
+            System.out.println("Erreur lors de la récupération du chemin du fichier de log.");
             return;
+        }
+
+        // Créer le fichier de log si nécessaire
+        File logFile = new File(logFilePath);
+        if (!logFile.exists()) {
+            File parentDir = logFile.getParentFile();
+            if (!parentDir.exists()) {
+                parentDir.mkdirs();
+            }
+            logFile.createNewFile();
         }
 
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(logFilePath, true)))) {
@@ -55,8 +61,18 @@ public class LogManager {
         if (level.equals(ERROR)) {
             logFilePath = configManager.getConfigValue("/myweb/errorlog");
             if (logFilePath == null) {
-                System.out.println("Erreur lors de la récupération du chemin du fichier de log d'erreur");
+                System.out.println("Erreur lors de la récupération du chemin du fichier de log d'erreur.");
                 return;
+            }
+
+            // Créer le fichier de log d'erreur si nécessaire
+            logFile = new File(logFilePath);
+            if (!logFile.exists()) {
+                File parentDir = logFile.getParentFile();
+                if (!parentDir.exists()) {
+                    parentDir.mkdirs();
+                }
+                logFile.createNewFile();
             }
 
             try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(logFilePath, true)))) {

@@ -1,8 +1,10 @@
 package utils;
 
+import java.net.NetworkInterface;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.InetAddress;
+import java.util.Enumeration;
 
 /**
  * Classe ServerManager.
@@ -36,11 +38,11 @@ public class ServerManager {
         // Vérifier si un port est spécifié dans la ligne de commande
         try {
             serverPort = Integer.parseInt(args[0]);
-        } catch (Exception _) {
+        } catch (Exception e) {
             logManager.print("Numéro de port invalide, lecture du fichier de configuration...", LogManager.WARN);
             try {
                 serverPort = Integer.parseInt(configManager.getConfigValue("/myweb/port"));
-            } catch (Exception _) {
+            } catch (Exception ex) {
                 logManager.print("Fichier de configuration invalide, utilisation du port par défaut...", LogManager.WARN);
             }
         }
@@ -50,9 +52,32 @@ public class ServerManager {
             serverPort = 80;
         }
 
+        // Récupérer l'adresse IP non locale de la machine hôte
+        String serverIp = null;
+        Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
+        while (interfaces.hasMoreElements()) {
+            NetworkInterface iface = interfaces.nextElement();
+            // filtre les interfaces de bouclage et les interfaces désactivées
+            if (iface.isLoopback() || !iface.isUp())
+                continue;
+
+            Enumeration<InetAddress> addresses = iface.getInetAddresses();
+            while(addresses.hasMoreElements()) {
+                InetAddress addr = addresses.nextElement();
+                // Vérifie si l'adresse est une instance de Inet4Address (c'est-à-dire une adresse IPv4)
+                if (addr instanceof java.net.Inet4Address) {
+                    serverIp = addr.getHostAddress();
+                    break;
+                }
+            }
+            if (serverIp != null) {
+                break;
+            }
+        }
+
         // Démarrage du serveur
-        logManager.print("Démarrage du serveur sur : http://" + InetAddress.getLocalHost().getHostAddress() + ":" + serverPort + "/", LogManager.INFO);
-        try (ServerSocket serverSocket = new ServerSocket(serverPort)) {
+        logManager.print("Démarrage du serveur sur : http://" + serverIp + ":" + serverPort + "/", LogManager.INFO);
+        try (ServerSocket serverSocket = new ServerSocket(serverPort, 0, InetAddress.getByName(serverIp))) {
             while (true) {
                 try {
                     Socket clientSocket = serverSocket.accept();

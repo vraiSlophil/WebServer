@@ -9,7 +9,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathFactory;
-import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.InputStream;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +22,9 @@ import java.util.Properties;
  */
 public class ConfigManager {
 
-    private static final String INI_FILE_PATH = "resources/myweb.ini";
-    private LogManager logManager;
+    private static final String INI_FILE_PATH = "/myweb.ini";
     private final FileManager fileManager;
+    private LogManager logManager;
     private Document configDoc;
 
     /**
@@ -31,9 +32,8 @@ public class ConfigManager {
      *
      * @param fileManager Le manager de fichiers.
      */
-    public ConfigManager(FileManager fileManager) throws Exception {
+    public ConfigManager(FileManager fileManager) {
         this.fileManager = fileManager;
-        loadConfigFile();
     }
 
     /**
@@ -43,27 +43,39 @@ public class ConfigManager {
      * Elle vérifie ensuite si le fichier de configuration existe et n'est pas un répertoire.
      * Si c'est le cas, elle lit le contenu du fichier de configuration, le parse en XML et stocke le Document XML pour une utilisation ultérieure.
      * Si une erreur se produit à n'importe quelle étape, un message d'erreur est imprimé et la méthode retourne.
+     *
      * @throws Exception Si une erreur se produit lors de la lecture ou du parsing des fichiers.
      */
-    private void loadConfigFile() throws Exception {
-        if (!fileManager.fileExists(INI_FILE_PATH)) {
-            logManager.print("Le fichier de configuration n'existe pas ou n'est pas un fichier valide : " + INI_FILE_PATH, LogManager.ERROR);
-            return;
+    public void loadConfigFile() throws Exception {
+        logManager.print("Chargement du fichier de configuration...", LogManager.INFO);
+//        System.out.println("Chargement du fichier de configuration...");
+        InputStream in = getClass().getResourceAsStream(INI_FILE_PATH);
+        Properties properties = new Properties();
+        properties.load(in);
+        String configFilePath = properties.getProperty("cfgfile");
+        in.close();
+
+        // Vérifier si le dossier parent existe
+        File configFile = new File(configFilePath);
+        File parentDir = configFile.getParentFile();
+        if (!parentDir.exists()) {
+            // Si le dossier parent n'existe pas, le créer
+            if (!parentDir.mkdirs()) {
+                throw new Exception("Impossible de créer le dossier parent : " + parentDir.getAbsolutePath());
+            }
         }
 
-        byte[] iniFileContent = fileManager.readFile(INI_FILE_PATH);
-        Properties properties = new Properties();
-        properties.load(new ByteArrayInputStream(iniFileContent));
-        String configFilePath = properties.getProperty("cfgfile");
-
-        if (!fileManager.fileExists(configFilePath)) {
-            logManager.print("Le fichier de configuration n'existe pas ou n'est pas un fichier valide : " + configFilePath, LogManager.ERROR);
-            return;
+        // Vérifier si le fichier de configuration existe
+        if (!configFile.exists()) {
+            // Si le fichier de configuration n'existe pas, le créer en copiant le fichier de ressource
+            InputStream resourceConfigStream = getClass().getResourceAsStream("/config/myweb.conf");
+            fileManager.copyStreamIfNotExists(resourceConfigStream, configFilePath);
         }
 
         byte[] configContent = fileManager.readFile(configFilePath);
         DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         configDoc = builder.parse(new InputSource(new StringReader(new String(configContent))));
+        logManager.print("Fichier de configuration chargé avec succès.", LogManager.INFO);
     }
 
     /**
@@ -74,7 +86,7 @@ public class ConfigManager {
      */
     public String getConfigValue(String xPathExpression) throws Exception {
         if (configDoc == null) {
-            logManager.print("Erreur lors de la récupération de la valeur de configuration : le document de configuration n'est pas chargé", LogManager.ERROR);
+            System.out.println("Erreur lors de la récupération de la valeur de configuration : le document de configuration n'est pas chargé");
             return null;
         }
 
@@ -82,7 +94,7 @@ public class ConfigManager {
         return (String) xpath.evaluate(xPathExpression, configDoc, XPathConstants.STRING);
     }
 
-/**
+    /**
      * Récupère une valeur du fichier de configuration.
      *
      * @param xPathExpression l'expression XPath de l'élément à récupérer
@@ -90,7 +102,7 @@ public class ConfigManager {
      */
     public List<String> getIPList(String xPathExpression) throws Exception {
         if (configDoc == null) {
-            logManager.print("Erreur lors de la récupération de la liste d'IP : le document de configuration n'est pas chargé", LogManager.ERROR);
+            System.out.println("Erreur lors de la récupération de la liste d'IP : le document de configuration n'est pas chargé");
             return null;
         }
 
@@ -103,6 +115,11 @@ public class ConfigManager {
         return ipList;
     }
 
+    /**
+     * Définit le manager de logs.
+     *
+     * @param logManager Le manager de logs.
+     */
     public void setLogManager(LogManager logManager) {
         this.logManager = logManager;
     }
