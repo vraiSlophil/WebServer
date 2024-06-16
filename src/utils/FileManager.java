@@ -51,7 +51,6 @@ public class FileManager {
      * @throws IOException Si une erreur se produit lors de la copie du flux.
      */
     public void copyStreamIfNotExists(InputStream sourceStream, String destinationPath) throws Exception {
-//        System.out.println("Attempting to copy stream to: " + destinationPath);
         File destinationFile = new File(destinationPath);
         if (!destinationFile.exists()) {
             // Créer le répertoire parent si nécessaire

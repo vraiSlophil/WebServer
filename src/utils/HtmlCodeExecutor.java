@@ -28,8 +28,13 @@ public class HtmlCodeExecutor {
             String interpreter = matcher.group(1);
             String code = matcher.group(2).trim();
 
-            String output = executeCode(interpreter, code);
-            matcher.appendReplacement(result, "<pre>" + Matcher.quoteReplacement(output) + "</pre>");
+            String output = null;
+            try {
+                output = executeCode(interpreter, code);
+                matcher.appendReplacement(result, "<pre>" + Matcher.quoteReplacement(output) + "</pre>");
+            } catch (Exception e) {
+                matcher.appendReplacement(result, "<pre>Erreur lors de l'exécution du code pour le langage " + interpreter + "</pre>");
+            }
         }
         matcher.appendTail(result);
         return result.toString();
