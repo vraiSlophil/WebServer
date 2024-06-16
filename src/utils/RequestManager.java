@@ -5,17 +5,13 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryUsage;
 import java.lang.management.OperatingSystemMXBean;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.FileStore;
 import java.nio.file.FileSystems;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import static utils.ImageEncoder.encodeImageFile;
-import static utils.ImageEncoder.generateImgTag;
 
 /**
  * Classe RequestManager.
@@ -158,10 +154,11 @@ public class RequestManager {
         }
 
         // Ajoute dans les balises <img> le code base64 de l'image
-        if (fileContent.contains("<img")) {
-            fileContent = ImageEncoder.processImageTag(fileContent, fileManager);
+        if (fileContent.contains("<img") || fileContent.contains("<audio") || fileContent.contains("<video")) {
+            fileContent = MediaEncoder.processMediaTags(new String(content, StandardCharsets.UTF_8), fileManager, configManager);
             content = fileContent.getBytes();
         }
+
 
         // Récupère le type de contenu
         String contentType = getContentType(filePath);
